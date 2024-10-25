@@ -2,6 +2,15 @@
 #include "SDL.h"
 #include <iostream>
 
+Player::~Player() {
+	for (int i = 0; i < PLAYER_SHOTS; i++) {
+		if (lasers[i] != nullptr) {
+			delete lasers[i];
+			lasers[i] = nullptr;
+		}
+	}
+}
+
 void Player::MoveUp(Maze* maze) {
 	if (y == MAZE_OFFSET) {
 		angle = 0;
@@ -119,7 +128,7 @@ void Player::Shoot() {
 
 	if (currentTime - lastShotTime >= SHOT_COOLDOWN) {
 		for (int i = 0; i < PLAYER_SHOTS; i++) {
-			if (lasers[i] == NULL) {
+			if (lasers[i] == nullptr) {
 				int laserX = 0;
 				int laserY = 0;
 
@@ -152,13 +161,13 @@ void Player::RenderLasers(SDL_Renderer* renderer, Maze* maze) {
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
 	for (int i = 0; i < PLAYER_SHOTS; i++) {
-		if (lasers[i] != NULL) {
+		if (lasers[i] != nullptr) {
 			bool shouldDestroy = false;
 			lasers[i]->Move(maze, shouldDestroy);
 
 			if (shouldDestroy) {
 				delete lasers[i];
-				lasers[i] = NULL;
+				lasers[i] = nullptr;
 			}
 			else if (lasers[i]->getAngle() == 0 || lasers[i]->getAngle() == 180) {
 				SDL_Rect laserRect = { lasers[i]->getX(), lasers[i]->getY(), LASER_WIDTH, LASER_LENGTH };

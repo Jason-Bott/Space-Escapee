@@ -7,7 +7,8 @@
 class Timer
 {
 public:
-	Timer() : time(START_TIME), lastSecond(0) {};
+	Timer(SDL_Renderer* renderer);
+	~Timer();
 	void Render(SDL_Renderer* renderer);
 	std::vector<int> CheckTime();
 	void AddTime();
@@ -15,5 +16,5 @@ private:
 	int time;
 	int lastSecond;
 	SDL_Texture* timeText;
-	SDL_Texture* numberText;
+	SDL_Texture* numberTextures[10];
 };

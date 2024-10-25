@@ -5,7 +5,8 @@
 class Maze
 {
 public:
-	Maze();
+	Maze(SDL_Renderer* renderer);
+	~Maze();
 	void Render(SDL_Renderer* renderer);
 	bool getHorizontalWall(int x, int y);
 	bool getVerticalWall(int x, int y);

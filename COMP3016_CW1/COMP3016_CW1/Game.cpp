@@ -17,13 +17,18 @@ Game::Game() {
         exit(1);
     }
 
-    maze = new Maze();
-    portal = new Portal();
-    timer = new Timer();
-    score = new Score();
+    maze = new Maze(renderer);
+    portal = new Portal(renderer);
+    timer = new Timer(renderer);
+    score = new Score(renderer);
 }
 
 Game::~Game() {
+    delete player;
+    delete maze;
+    delete portal;
+    delete timer;
+    delete score;
     SDL_DestroyTexture(playerTexture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -100,8 +105,12 @@ void Game::Render() {
 }
 
 void Game::LevelComplete() {
-    maze = new Maze();
-    portal = new Portal();
+    delete maze;
+    delete portal;
+    maze = new Maze(renderer);
+    portal = new Portal(renderer);
+
+
     timer->AddTime();
     score->AddScore(LEVEL_COMPLETE_SCORE);
 }

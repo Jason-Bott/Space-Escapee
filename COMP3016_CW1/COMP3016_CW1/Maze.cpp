@@ -3,8 +3,13 @@
 #include <cstdlib>
 #include <ctime>
 
-Maze::Maze() {
+Maze::Maze(SDL_Renderer* renderer) {
 	srand(static_cast<unsigned>(time(0)));
+	wallTexture = IMG_LoadTexture(renderer, "wall_sprite.png");
+
+	if (!wallTexture) {
+		exit(1);
+	}
 
 	for (int x = 0; x < MAZE_WIDTH; x++) {
 		for (int y = 0; y < MAZE_HEIGHT + 1; y++) {
@@ -39,13 +44,15 @@ Maze::Maze() {
 	}
 }
 
+Maze::~Maze() {
+	if (wallTexture) {
+		SDL_DestroyTexture(wallTexture);
+		wallTexture = nullptr;
+	}
+}
+
 void Maze::Render(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	wallTexture = IMG_LoadTexture(renderer, "wall_sprite.png");
-
-	if (!wallTexture) {
-		exit(1);
-	}
 
 	for (int x = 0; x < MAZE_WIDTH; x++) {
 		for (int y = 0; y < MAZE_HEIGHT + 1; y++) {

@@ -7,12 +7,13 @@
 class Score
 {
 public:
-	Score() : score(0) {};
+	Score(SDL_Renderer* renderer);
+	~Score();
 	void Render(SDL_Renderer* renderer);
 	void AddScore(int amount);
 	std::vector<int> ScoreAsDigits();
 private:
 	int score;
 	SDL_Texture* scoreText;
-	SDL_Texture* numberText;
+	SDL_Texture* numberTextures[10];
 };
