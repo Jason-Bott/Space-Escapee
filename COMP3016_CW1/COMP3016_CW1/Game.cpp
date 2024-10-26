@@ -17,10 +17,17 @@ Game::Game() {
         exit(1);
     }
 
+    title = IMG_LoadTexture(renderer, "title.png");
+
+    if (!title) {
+        exit(1);
+    }
+
     maze = new Maze(renderer);
     portal = new Portal(renderer);
     timer = new Timer(renderer);
     score = new Score(renderer);
+    level = new Level(renderer);
 }
 
 Game::~Game() {
@@ -90,10 +97,14 @@ void Game::Render() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
+    SDL_Rect titleRect = { (WINDOW_WIDTH / 2) - 100, 0, 200, 100 };
+    SDL_RenderCopyEx(renderer, title, NULL, &titleRect, 0, NULL, SDL_FLIP_NONE);
+
     maze->Render(renderer);
     portal->Render(renderer);
     timer->Render(renderer);
     score->Render(renderer);
+    level->Render(renderer);
     player->RenderLasers(renderer, maze);
 
     SDL_Rect playerRect = { player->getX(), player->getY(), PLAYER_SIZE, PLAYER_SIZE };
@@ -113,4 +124,5 @@ void Game::LevelComplete() {
 
     timer->AddTime();
     score->AddScore(LEVEL_COMPLETE_SCORE);
+    level->NextLevel();
 }

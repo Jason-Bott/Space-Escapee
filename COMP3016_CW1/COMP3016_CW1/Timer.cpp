@@ -74,13 +74,13 @@ void Timer::AddTime() {
 void Timer::Render(SDL_Renderer* renderer) {
 	std::vector<int> digits = CheckTime();
 
-	SDL_Rect timeRect = { 0, 0, 100, 50 };
+	SDL_Rect timeRect = { 1000, 50, 100, 50 };
 	SDL_RenderCopyEx(renderer, timeText, NULL, &timeRect, 0, NULL, SDL_FLIP_NONE);
 
 	for (int i = 0; i < digits.size(); i++) {
 		int digit = digits[i];
 
-		SDL_Rect numberRect = { 100 + (20 * i), 0, 20, 50 };
+		SDL_Rect numberRect = { 1100 + (20 * i), 50, 20, 50 };
 		SDL_RenderCopyEx(renderer, numberTextures[digit], NULL, &numberRect, 0, NULL, SDL_FLIP_NONE);
 	}
 }

@@ -133,6 +133,7 @@
     <ClCompile Include="COMP3016_CW1.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portal.h" />

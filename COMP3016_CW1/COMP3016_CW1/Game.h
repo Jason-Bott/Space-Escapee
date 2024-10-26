@@ -7,6 +7,7 @@
 #include "Portal.h"
 #include "Timer.h"
 #include "Score.h"
+#include "Level.h"
 
 class Game
 {
@@ -21,10 +22,12 @@ private:
 	void LevelComplete();
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+	SDL_Texture* title;
 	Player* player;
 	SDL_Texture* playerTexture;
 	Maze* maze;
 	Portal* portal;
 	Timer* timer;
 	Score* score;
+	Level* level;
 };

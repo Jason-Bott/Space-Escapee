@@ -56,7 +56,7 @@ std::vector<int> Score::ScoreAsDigits() {
 }
 
 void Score::Render(SDL_Renderer* renderer) {
-	SDL_Rect scoreRect = { 200, 0, 120, 50 };
+	SDL_Rect scoreRect = { 220, 50, 120, 50 };
 	SDL_RenderCopyEx(renderer, scoreText, NULL, &scoreRect, 0, NULL, SDL_FLIP_NONE);
 
 	std::vector<int> digits = ScoreAsDigits();
@@ -64,7 +64,7 @@ void Score::Render(SDL_Renderer* renderer) {
 	for (int i = 0; i < digits.size(); i++) {
 		int digit = digits[i];
 
-		SDL_Rect numberRect = { 320 + (20 * i), 0, 20, 50 };
+		SDL_Rect numberRect = { 340 + (20 * i), 50, 20, 50 };
 		SDL_RenderCopyEx(renderer, numberTextures[digit], NULL, &numberRect, 0, NULL, SDL_FLIP_NONE);
 	}
 }
