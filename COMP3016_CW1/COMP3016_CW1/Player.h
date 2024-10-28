@@ -6,11 +6,7 @@
 class Player
 {
 public:
-	Player(int x, int y) : x(x), y(y), angle(0), lasers(), lastShotTime(0) {
-		for (int i = 0; i < PLAYER_SHOTS; i++) {
-			lasers[i] = nullptr;
-		}
-	};
+	Player(int x, int y);
 	~Player();
 	void MoveUp(Maze* maze);
 	void MoveLeft(Maze* maze);

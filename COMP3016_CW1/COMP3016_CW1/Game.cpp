@@ -28,6 +28,7 @@ Game::Game() {
     timer = new Timer(renderer);
     score = new Score(renderer);
     level = new Level(renderer);
+    enemyController = new EnemyController(renderer, level->getLevel());
 }
 
 Game::~Game() {
@@ -105,6 +106,7 @@ void Game::Render() {
     timer->Render(renderer);
     score->Render(renderer);
     level->Render(renderer);
+    enemyController->UpdateEnemies(maze, renderer);
     player->RenderLasers(renderer, maze);
 
     SDL_Rect playerRect = { player->getX(), player->getY(), PLAYER_SIZE, PLAYER_SIZE };
@@ -118,8 +120,10 @@ void Game::Render() {
 void Game::LevelComplete() {
     delete maze;
     delete portal;
+    delete enemyController;
     maze = new Maze(renderer);
     portal = new Portal(renderer);
+    enemyController = new EnemyController(renderer, level->getLevel());
 
 
     timer->AddTime();

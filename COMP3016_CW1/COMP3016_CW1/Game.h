@@ -8,6 +8,7 @@
 #include "Timer.h"
 #include "Score.h"
 #include "Level.h"
+#include "EnemyController.h"
 
 class Game
 {
@@ -30,4 +31,5 @@ private:
 	Timer* timer;
 	Score* score;
 	Level* level;
+	EnemyController* enemyController;
 };

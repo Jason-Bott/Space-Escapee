@@ -26,3 +26,6 @@ const int TIME_INCREASE = 15;
 
 const int LEVEL_COMPLETE_SCORE = 10;
 const int ENEMY_DEFEAT_SCORE = 5;
+
+const int ENEMY_SIZE = 50;
+const int ENEMY_SHOTS = 10;

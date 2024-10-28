@@ -2,6 +2,12 @@
 #include "SDL.h"
 #include <iostream>
 
+Player::Player(int x, int y) : x(x), y(y), angle(0), lasers(), lastShotTime(0) {
+	for (int i = 0; i < PLAYER_SHOTS; i++) {
+		lasers[i] = nullptr;
+	}
+};
+
 Player::~Player() {
 	for (int i = 0; i < PLAYER_SHOTS; i++) {
 		if (lasers[i] != nullptr) {

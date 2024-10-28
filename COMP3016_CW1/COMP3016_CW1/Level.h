@@ -12,6 +12,7 @@ public:
 	void Render(SDL_Renderer* renderer);
 	void NextLevel();
 	std::vector<int> LevelAsDigits();
+	int getLevel() const { return level; }
 private:
 	int level;
 	SDL_Texture* levelText;
