@@ -21,6 +21,9 @@ private:
 	void CheckExit();
 	void Render();
 	void LevelComplete();
+	void GameOver();
+	void Restart();
+	bool isRunning;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Texture* title;
@@ -32,4 +35,5 @@ private:
 	Score* score;
 	Level* level;
 	EnemyController* enemyController;
+	SDL_Texture* gameOverText;
 };

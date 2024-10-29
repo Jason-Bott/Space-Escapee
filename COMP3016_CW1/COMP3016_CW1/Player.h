@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "Maze.h"
 #include "Laser.h"
+#include "Score.h"
 
 class Player
 {
@@ -13,7 +14,7 @@ public:
 	void MoveDown(Maze* maze);
 	void MoveRight(Maze* maze);
 	void Shoot();
-	void RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* enemyController);
+	void RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* enemyController, Score* score);
 	int getX() const { return x; }
 	int getY() const { return y; }
 	float getAngle() const { return angle; }

@@ -119,6 +119,29 @@ void Laser::CheckForEnemies(EnemyController* enemyController, bool& shouldDestro
 	}
 }
 
-void Laser::CheckForPlayer() {
-
+void Laser::CheckForPlayer(int playerX, int playerY, bool& shouldDestroy) {
+	if (angle == 0) {
+		if (x + (LASER_WIDTH / 2) > playerX && x + (LASER_WIDTH / 2) < playerX + PLAYER_SIZE && y > playerY && y < playerY + PLAYER_SIZE) {
+			shouldDestroy = true;
+			return;
+		}
+	}
+	else if (angle == 90) {
+		if (x + LASER_LENGTH > playerX && x + LASER_LENGTH < playerX + PLAYER_SIZE && y + (LASER_WIDTH / 2) > playerY && y + (LASER_WIDTH / 2) < playerY + PLAYER_SIZE) {
+			shouldDestroy = true;
+			return;
+		}
+	}
+	else if (angle == 180) {
+		if (x + (LASER_WIDTH / 2) > playerX && x + (LASER_WIDTH / 2) < playerX + PLAYER_SIZE && y + LASER_LENGTH > playerY && y + LASER_LENGTH < playerY + PLAYER_SIZE) {
+			shouldDestroy = true;
+			return;
+		}
+	}
+	else if (angle == 270) {
+		if (x > playerX && x < playerX + PLAYER_SIZE && y + (LASER_WIDTH / 2) > playerY && y + (LASER_WIDTH / 2) < playerY + PLAYER_SIZE) {
+			shouldDestroy = true;
+			return;
+		}
+	}
 }

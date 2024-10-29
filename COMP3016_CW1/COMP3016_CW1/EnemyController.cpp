@@ -20,12 +20,12 @@ EnemyController::~EnemyController() {
 	}
 }
 
-void EnemyController::UpdateEnemies(Maze* maze, SDL_Renderer* renderer) {
+void EnemyController::UpdateEnemies(Maze* maze, SDL_Renderer* renderer, EnemyController* enemyController, Score* score, int playerX, int playerY, bool& isRunning) {
 	for (auto enemy : enemies) {
 		enemy->Move(maze);
 		enemy->Shoot();
 		enemy->Render(renderer);
-		enemy->RenderLasers(renderer, maze);
+		enemy->RenderLasers(renderer, maze, enemyController, score, playerX, playerY, isRunning);
 	}
 }
 

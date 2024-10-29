@@ -1,7 +1,9 @@
 #include "Game.h"
 #include <iostream>
+#include <chrono>
+#include <thread> 
 
-Game::Game() {
+Game::Game() : isRunning(true) {
 	SDL_Init(SDL_INIT_VIDEO);
 	window = SDL_CreateWindow("Space Escapee", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -23,6 +25,12 @@ Game::Game() {
         exit(1);
     }
 
+    gameOverText = IMG_LoadTexture(renderer, "game_over.png");
+
+    if (!gameOverText) {
+        exit(1);
+    }
+
     maze = new Maze(renderer);
     portal = new Portal(renderer);
     timer = new Timer(renderer);
@@ -37,6 +45,8 @@ Game::~Game() {
     delete portal;
     delete timer;
     delete score;
+    delete level;
+    delete enemyController;
     SDL_DestroyTexture(playerTexture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -45,11 +55,13 @@ Game::~Game() {
 }
 
 void Game::Run() {
-	while (true) {
+	while (isRunning) {
 		Input();
         CheckExit();
 		Render();
 	}
+
+    GameOver();
 }
 
 void Game::Input() {
@@ -106,8 +118,8 @@ void Game::Render() {
     timer->Render(renderer);
     score->Render(renderer);
     level->Render(renderer);
-    enemyController->UpdateEnemies(maze, renderer);
-    player->RenderLasers(renderer, maze, enemyController);
+    enemyController->UpdateEnemies(maze, renderer, enemyController, score, player->getX(), player->getY(), isRunning);
+    player->RenderLasers(renderer, maze, enemyController, score);
 
     SDL_Rect playerRect = { player->getX(), player->getY(), PLAYER_SIZE, PLAYER_SIZE };
     float angle = player->getAngle();
@@ -118,6 +130,9 @@ void Game::Render() {
 }
 
 void Game::LevelComplete() {
+    isRunning = false;
+    return;
+
     delete maze;
     delete portal;
     delete enemyController;
@@ -128,4 +143,57 @@ void Game::LevelComplete() {
     timer->AddTime();
     score->AddScore(LEVEL_COMPLETE_SCORE);
     level->NextLevel();
+}
+
+void Game::GameOver() {
+    SDL_Rect gameOverRect = { (WINDOW_WIDTH / 2) - 300, (WINDOW_HEIGHT / 2) - 100, 600, 200};
+    SDL_RenderCopyEx(renderer, gameOverText, NULL, &gameOverRect, 0, NULL, SDL_FLIP_NONE);
+    SDL_RenderPresent(renderer);
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    bool waitingForInput = true;
+    while (waitingForInput) {
+        SDL_Event event;
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                SDL_Quit();
+                exit(0);
+            }
+        }
+
+        if (state[SDL_SCANCODE_ESCAPE]) {
+            waitingForInput = false;
+        }
+
+        for (int key = 0; key < 512; key++) {
+            if (state[key] && key != SDL_SCANCODE_ESCAPE) {
+                Restart();
+                waitingForInput = false;
+                break;
+            }
+        }
+    }
+}
+
+void Game::Restart() {
+    isRunning = true;
+
+    delete maze;
+    delete portal;
+    delete timer;
+    delete score;
+    delete level;
+    delete enemyController;
+
+    maze = new Maze(renderer);
+    portal = new Portal(renderer);
+    timer = new Timer(renderer);
+    score = new Score(renderer);
+    level = new Level(renderer);
+    enemyController = new EnemyController(renderer, level->getLevel());
+
+    Run();
 }

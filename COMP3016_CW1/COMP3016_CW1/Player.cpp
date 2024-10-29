@@ -163,7 +163,7 @@ void Player::Shoot() {
 	}
 }
 
-void Player::RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* enemyController) {
+void Player::RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* enemyController, Score* score) {
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
 	for (int i = 0; i < PLAYER_SHOTS; i++) {
@@ -181,6 +181,7 @@ void Player::RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* e
 				if (shouldDestroy) {
 					delete lasers[i];
 					lasers[i] = nullptr;
+					score->AddScore(ENEMY_DEFEAT_SCORE);
 				}
 				else if (lasers[i]->getAngle() == 0 || lasers[i]->getAngle() == 180) {
 					SDL_Rect laserRect = { lasers[i]->getX(), lasers[i]->getY(), LASER_WIDTH, LASER_LENGTH };
