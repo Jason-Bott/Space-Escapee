@@ -28,3 +28,16 @@ void EnemyController::UpdateEnemies(Maze* maze, SDL_Renderer* renderer) {
 		enemy->RenderLasers(renderer, maze);
 	}
 }
+
+void EnemyController::LaserCheck(int x, int y, bool& shouldDestroy) {
+	for (auto enemy : enemies) {
+		int enemyX = enemy->getX();
+		int enemyY = enemy->getY();
+
+		if (x > enemyX && x < enemyX + ENEMY_SIZE && y > enemyY && y < enemyY + ENEMY_SIZE) {
+			enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
+			shouldDestroy = true;
+			return;
+		}
+	}
+}

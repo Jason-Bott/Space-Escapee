@@ -1,4 +1,5 @@
 #include "Laser.h"
+#include "EnemyController.h"
 
 void Laser::Move(Maze* maze, bool& shouldDestroy) {
 	if (angle == 0) {
@@ -101,4 +102,23 @@ void Laser::Move(Maze* maze, bool& shouldDestroy) {
 			}
 		}
 	}
+}
+
+void Laser::CheckForEnemies(EnemyController* enemyController, bool& shouldDestroy) {
+	if (angle == 0) {
+		enemyController->LaserCheck(x + (LASER_WIDTH / 2), y, shouldDestroy);
+	}
+	else if (angle == 90) {
+		enemyController->LaserCheck(x + LASER_LENGTH, y + (LASER_WIDTH / 2), shouldDestroy);
+	}
+	else if (angle == 180) {
+		enemyController->LaserCheck(x + (LASER_WIDTH / 2), y + LASER_LENGTH, shouldDestroy);
+	}
+	else if (angle == 270) {
+		enemyController->LaserCheck(x, y + (LASER_WIDTH / 2), shouldDestroy);
+	}
+}
+
+void Laser::CheckForPlayer() {
+
 }

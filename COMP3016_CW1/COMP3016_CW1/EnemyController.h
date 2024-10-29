@@ -10,6 +10,7 @@ public:
 	EnemyController(SDL_Renderer* renderer, int level);
 	~EnemyController();
 	void UpdateEnemies(Maze* maze, SDL_Renderer* renderer);
+	void LaserCheck(int x, int y, bool& shouldDestroy);
 private:
 	std::vector<Enemy*> enemies;
 };

@@ -107,7 +107,7 @@ void Game::Render() {
     score->Render(renderer);
     level->Render(renderer);
     enemyController->UpdateEnemies(maze, renderer);
-    player->RenderLasers(renderer, maze);
+    player->RenderLasers(renderer, maze, enemyController);
 
     SDL_Rect playerRect = { player->getX(), player->getY(), PLAYER_SIZE, PLAYER_SIZE };
     float angle = player->getAngle();
@@ -124,7 +124,6 @@ void Game::LevelComplete() {
     maze = new Maze(renderer);
     portal = new Portal(renderer);
     enemyController = new EnemyController(renderer, level->getLevel());
-
 
     timer->AddTime();
     score->AddScore(LEVEL_COMPLETE_SCORE);

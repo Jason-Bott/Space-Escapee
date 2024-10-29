@@ -1,2 +1,9 @@
-﻿  Game.cpp
-  COMP3016_CW1.vcxproj -> C:\Users\jbott1\Space-Escapee\COMP3016_CW1\x64\Debug\COMP3016_CW1.exe
+﻿  COMP3016_CW1.cpp
+  Enemy.cpp
+  EnemyController.cpp
+  Game.cpp
+  Laser.cpp
+  Player.cpp
+  Spinner.cpp
+  Generating Code...
+  COMP3016_CW1.vcxproj -> C:\Users\jason\University\Space-Escapee\COMP3016_CW1\x64\Debug\COMP3016_CW1.exe

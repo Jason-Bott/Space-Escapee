@@ -13,7 +13,7 @@ public:
 	void MoveDown(Maze* maze);
 	void MoveRight(Maze* maze);
 	void Shoot();
-	void RenderLasers(SDL_Renderer* renderer, Maze* maze);
+	void RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* enemyController);
 	int getX() const { return x; }
 	int getY() const { return y; }
 	float getAngle() const { return angle; }
