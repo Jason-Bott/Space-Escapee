@@ -48,11 +48,11 @@ Game::Game() : isRunning(true) {
     Mix_PlayMusic(music, -1);
 
     maze = new Maze(renderer);
-    portal = new Portal(renderer);
+    portal = new Portal(renderer, (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
     timer = new Timer(renderer);
     score = new Score(renderer);
     level = new Level(renderer);
-    enemyController = new EnemyController(renderer, level->getLevel());
+    enemyController = new EnemyController(renderer, level->getLevel(), (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
 }
 
 Game::~Game() {
@@ -159,8 +159,8 @@ void Game::LevelComplete() {
     level->NextLevel();
 
     maze = new Maze(renderer);
-    portal = new Portal(renderer);
-    enemyController = new EnemyController(renderer, level->getLevel());
+    portal = new Portal(renderer, (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
+    enemyController = new EnemyController(renderer, level->getLevel(), (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
 }
 
 void Game::GameOver() {
@@ -212,11 +212,11 @@ void Game::Restart() {
 
     player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     maze = new Maze(renderer);
-    portal = new Portal(renderer);
+    portal = new Portal(renderer, (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
     timer = new Timer(renderer);
     score = new Score(renderer);
     level = new Level(renderer);
-    enemyController = new EnemyController(renderer, level->getLevel());
+    enemyController = new EnemyController(renderer, level->getLevel(), (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
 
     Mix_PlayMusic(music, -1);
     Run();

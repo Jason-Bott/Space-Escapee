@@ -4,12 +4,19 @@
 #include <cstdlib>
 #include <ctime>
 
-Portal::Portal(SDL_Renderer* renderer) {
+Portal::Portal(SDL_Renderer* renderer, int playerX, int playerY) {
 	srand(static_cast<unsigned>(time(0)));
+
 	int randomX = rand() % MAZE_WIDTH;
+	while (randomX == playerX) {
+		randomX = rand() % MAZE_WIDTH;
+	}
 	x = randomX;
 
 	int randomY = rand() % MAZE_HEIGHT;
+	while (randomY == playerY) {
+		randomY = rand() % MAZE_HEIGHT;
+	}
 	y = randomY;
 
 	xPosition = ((x * WALL_LENGTH) + MAZE_OFFSET) + ((((WALL_LENGTH - WALL_WIDTH) - PORTAL_WIDTH) / 2) + WALL_WIDTH);

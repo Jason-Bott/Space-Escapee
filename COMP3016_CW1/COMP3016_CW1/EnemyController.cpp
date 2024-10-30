@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-EnemyController::EnemyController(SDL_Renderer* renderer, int level) {
+EnemyController::EnemyController(SDL_Renderer* renderer, int level, int playerX, int playerY) {
 	srand(static_cast<unsigned>(time(0) * 2));
 	int randomX = 0;
 	int randomY = 0;
@@ -13,22 +13,52 @@ EnemyController::EnemyController(SDL_Renderer* renderer, int level) {
 	}
 
 	for (int i = 0; i < spinners; i++) {
-		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
-		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		int randomX = rand() % MAZE_WIDTH;
+		while (randomX == playerX) {
+			randomX = rand() % MAZE_WIDTH;
+		}
+
+		int randomY = rand() % MAZE_HEIGHT;
+		while (randomY == playerY) {
+			randomY = rand() % MAZE_HEIGHT;
+		}
+
+		randomX = MAZE_OFFSET + (randomX * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		randomY = MAZE_OFFSET + (randomY * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
 		enemies.push_back(new Spinner(randomX, randomY, renderer));
 	}
 
 	int patrollers = (level / 3);
 	for (int i = 0; i < patrollers; i++) {
-		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
-		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		int randomX = rand() % MAZE_WIDTH;
+		while (randomX == playerX) {
+			randomX = rand() % MAZE_WIDTH;
+		}
+
+		int randomY = rand() % MAZE_HEIGHT;
+		while (randomY == playerY) {
+			randomY = rand() % MAZE_HEIGHT;
+		}
+
+		randomX = MAZE_OFFSET + (randomX * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		randomY = MAZE_OFFSET + (randomY * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
 		enemies.push_back(new Patroller(randomX, randomY, renderer));
 	}
 
 	int roamers = (level / 4);
 	for (int i = 0; i < roamers; i++) {
-		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
-		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		int randomX = rand() % MAZE_WIDTH;
+		while (randomX == playerX) {
+			randomX = rand() % MAZE_WIDTH;
+		}
+
+		int randomY = rand() % MAZE_HEIGHT;
+		while (randomY == playerY) {
+			randomY = rand() % MAZE_HEIGHT;
+		}
+
+		randomX = MAZE_OFFSET + (randomX * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		randomY = MAZE_OFFSET + (randomY * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
 		enemies.push_back(new Roamer(randomX, randomY, renderer));
 	}
 }

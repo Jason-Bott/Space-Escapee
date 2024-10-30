@@ -4,7 +4,7 @@
 class Portal
 {
 public:
-	Portal(SDL_Renderer* renderer);
+	Portal(SDL_Renderer* renderer, int playerX, int playerY);
 	~Portal();
 	void Render(SDL_Renderer* renderer);
 	int getX() const { return xPosition; }
