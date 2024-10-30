@@ -6,6 +6,12 @@ Player::Player(int x, int y) : x(x), y(y), angle(0), lasers(), lastShotTime(0) {
 	for (int i = 0; i < PLAYER_SHOTS; i++) {
 		lasers[i] = nullptr;
 	}
+
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+	laserSFX = Mix_LoadWAV("laser.mp3");
+	if (!laserSFX) {
+		exit(1);
+	}
 };
 
 Player::~Player() {
@@ -157,6 +163,8 @@ void Player::Shoot() {
 
 				lasers[i] = new Laser(laserX, laserY, angle);
 				lastShotTime = currentTime;
+
+				Mix_PlayChannel(-1, laserSFX, 0);
 				return;
 			}
 		}

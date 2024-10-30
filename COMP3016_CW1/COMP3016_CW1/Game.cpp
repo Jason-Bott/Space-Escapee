@@ -7,29 +7,35 @@ Game::Game() : isRunning(true) {
 	SDL_Init(SDL_INIT_VIDEO);
 	window = SDL_CreateWindow("Space Escapee", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
     if (IMG_Init(IMG_INIT_PNG) == 0) {
         exit(1);
     }
 
 	player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     playerTexture = IMG_LoadTexture(renderer, "player_sprite.png");
-
     if (!playerTexture) {
         exit(1);
     }
 
     title = IMG_LoadTexture(renderer, "title.png");
-
     if (!title) {
         exit(1);
     }
 
     gameOverText = IMG_LoadTexture(renderer, "game_over.png");
-
     if (!gameOverText) {
         exit(1);
     }
+
+    Mix_Init(MIX_INIT_MP3);
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+
+    music = Mix_LoadMUS("music.mp3");
+    if (!music) {
+        exit(1);
+    }
+
+    Mix_PlayMusic(music, -1);
 
     maze = new Maze(renderer);
     portal = new Portal(renderer);

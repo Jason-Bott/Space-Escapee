@@ -1,5 +1,6 @@
 #pragma once
 #include "Constants.h"
+#include "SDL_mixer.h"
 #include "Maze.h"
 #include "Laser.h"
 #include "Score.h"
@@ -23,6 +24,7 @@ private:
 	int y;
 	float angle;
 	Laser* lasers[PLAYER_SHOTS];
+	Mix_Chunk* laserSFX;
 	int lastShotTime;
 };
 
