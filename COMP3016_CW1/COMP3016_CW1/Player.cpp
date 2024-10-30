@@ -1,15 +1,43 @@
 #include "Player.h"
-#include "SDL.h"
 #include <iostream>
 
-Player::Player(int x, int y) : x(x), y(y), angle(0), lasers(), lastShotTime(0) {
+Player::Player(int x, int y, SDL_Renderer* renderer) : x(x), y(y), angle(0), lasers(), lastShotTime(0), lastBlinkTime(SDL_GetTicks() - BLINK_COOLDOWN) {
 	for (int i = 0; i < PLAYER_SHOTS; i++) {
 		lasers[i] = nullptr;
 	}
 
+	const char* filenames[] = {
+	"number_0.png", "number_1.png", "number_2.png", "number_3.png", "number_4.png",
+	"number_5.png", "number_6.png", "number_7.png", "number_8.png", "number_9.png"
+	};
+
+	for (int i = 0; i < 10; i++) {
+		numberTextures[i] = IMG_LoadTexture(renderer, filenames[i]);
+
+		if (!numberTextures[i]) {
+			exit(1);
+		}
+	}
+
+	blinkText = IMG_LoadTexture(renderer, "blink_text.png");
+	if (!blinkText) {
+		exit(1);
+	}
+
+	readyText = IMG_LoadTexture(renderer, "ready_text.png");
+	if (!readyText) {
+		exit(1);
+	}
+
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+
 	laserSFX = Mix_LoadWAV("laser.mp3");
 	if (!laserSFX) {
+		exit(1);
+	}
+
+	blinkSFX = Mix_LoadWAV("blinkSFX.mp3");
+	if (!blinkSFX) {
 		exit(1);
 	}
 };
@@ -19,6 +47,23 @@ Player::~Player() {
 		if (lasers[i] != nullptr) {
 			delete lasers[i];
 			lasers[i] = nullptr;
+		}
+	}
+
+	if (blinkText) {
+		SDL_DestroyTexture(blinkText);
+		blinkText = nullptr;
+	}
+
+	if (readyText) {
+		SDL_DestroyTexture(readyText);
+		readyText = nullptr;
+	}
+
+	for (int i = 0; i < 10; ++i) {
+		if (numberTextures[i]) {
+			SDL_DestroyTexture(numberTextures[i]);
+			numberTextures[i] = nullptr;
 		}
 	}
 }
@@ -135,6 +180,28 @@ void Player::MoveRight(Maze* maze) {
 	}
 }
 
+void Player::Blink() {
+	int currentTime = SDL_GetTicks();
+
+	if (currentTime - lastBlinkTime >= BLINK_COOLDOWN) {
+		if (angle == 0) {
+			y -= WALL_LENGTH;
+		}
+		else if (angle == 90) {
+			x += WALL_LENGTH;
+		}
+		else if (angle == 180) {
+			y += WALL_LENGTH;
+		}
+		else if (angle == 270) {
+			x -= WALL_LENGTH;
+		}
+
+		Mix_PlayChannel(-1, blinkSFX, 0);
+		lastBlinkTime = currentTime;
+	}
+}
+
 void Player::Shoot() {
 	int currentTime = SDL_GetTicks();
 
@@ -201,5 +268,36 @@ void Player::RenderLasers(SDL_Renderer* renderer, Maze* maze, EnemyController* e
 				}
 			}
 		}
+	}
+}
+
+void Player::RenderBlinkCooldown(SDL_Renderer* renderer) {
+	SDL_Rect blinkRect = { 120, 1125, 120, 50 };
+	SDL_RenderCopyEx(renderer, blinkText, NULL, &blinkRect, 0, NULL, SDL_FLIP_NONE);
+
+	std::vector<int> digits;
+	int timeLeft = BLINK_COOLDOWN - (SDL_GetTicks() - lastBlinkTime);
+
+	if (timeLeft <= 0) {
+		SDL_Rect readyRect = { 240, 1125, 120, 50 };
+		SDL_RenderCopyEx(renderer, readyText, NULL, &readyRect, 0, NULL, SDL_FLIP_NONE);
+		return;
+	}
+
+	timeLeft = (timeLeft / 1000) + 1;
+
+	do {
+		digits.push_back(timeLeft % 10);
+		timeLeft /= 10;
+	} while (timeLeft > 0);
+
+
+	std::reverse(digits.begin(), digits.end());
+
+	for (int i = 0; i < digits.size(); i++) {
+		int digit = digits[i];
+
+		SDL_Rect numberRect = { 240 + (20 * i), 1125, 20, 50 };
+		SDL_RenderCopyEx(renderer, numberTextures[digit], NULL, &numberRect, 0, NULL, SDL_FLIP_NONE);
 	}
 }

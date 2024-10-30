@@ -11,7 +11,7 @@ Game::Game() : isRunning(true) {
         exit(1);
     }
 
-    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, renderer);
     playerTexture = IMG_LoadTexture(renderer, "player_sprite.png");
     if (!playerTexture) {
         exit(1);
@@ -113,6 +113,10 @@ void Game::Input() {
         player->Shoot();
     }
 
+    if (state[SDL_SCANCODE_LSHIFT]) {
+        player->Blink();
+    }
+
     if (state[SDL_SCANCODE_X]) {
         SDL_Quit();
         exit(0);
@@ -145,6 +149,7 @@ void Game::Render() {
     level->Render(renderer);
     enemyController->UpdateEnemies(maze, renderer, enemyController, score, player->getX(), player->getY(), isRunning);
     player->RenderLasers(renderer, maze, enemyController, score);
+    player->RenderBlinkCooldown(renderer);
 
     SDL_Rect playerRect = { player->getX(), player->getY(), PLAYER_SIZE, PLAYER_SIZE };
     float angle = player->getAngle();
@@ -217,7 +222,7 @@ void Game::Restart() {
     delete level;
     delete enemyController;
 
-    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, renderer);
     maze = new Maze(renderer);
     portal = new Portal(renderer, (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
     timer = new Timer(renderer);

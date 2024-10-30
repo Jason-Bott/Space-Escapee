@@ -16,6 +16,7 @@ const int PLAYER_SPEED = 2;
 const int PLAYER_SIZE = 50;
 const int PLAYER_SHOTS = 3;
 const int SHOT_COOLDOWN = 500;
+const int BLINK_COOLDOWN = 10000;
 
 const int LASER_LENGTH = 10;
 const int LASER_WIDTH = 5;
