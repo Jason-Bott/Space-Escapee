@@ -45,6 +45,11 @@ Game::Game() : isRunning(true) {
         exit(1);
     }
 
+    portalSFX = Mix_LoadWAV("portalSFX.mp3");
+    if (!portalSFX) {
+        exit(1);
+    }
+
     Mix_PlayMusic(music, -1);
 
     maze = new Maze(renderer);
@@ -161,6 +166,8 @@ void Game::LevelComplete() {
     maze = new Maze(renderer);
     portal = new Portal(renderer, (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
     enemyController = new EnemyController(renderer, level->getLevel(), (player->getX() - MAZE_OFFSET) / WALL_LENGTH, (player->getY() - MAZE_OFFSET) / WALL_LENGTH);
+
+    Mix_PlayChannel(-1, portalSFX, 0);
 }
 
 void Game::GameOver() {

@@ -40,4 +40,5 @@ private:
 	SDL_Texture* pressToText;
 	Mix_Music* music;
 	Mix_Chunk* gameOverSFX;
+	Mix_Chunk* portalSFX;
 };
