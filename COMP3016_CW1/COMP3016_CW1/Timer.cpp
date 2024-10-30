@@ -46,8 +46,9 @@ std::vector<int> Timer::CheckTime() {
 
 	std::vector<int> digits;
 
-	if (time < 0) {
-		//End Game
+	if (time == 0) {
+		digits.push_back(0);
+		return digits;
 	}
 
 	if (time > 9999) {
@@ -71,7 +72,7 @@ void Timer::AddTime() {
 	time += TIME_INCREASE;
 }
 
-void Timer::Render(SDL_Renderer* renderer) {
+bool Timer::Render(SDL_Renderer* renderer) {
 	std::vector<int> digits = CheckTime();
 
 	SDL_Rect timeRect = { 1000, 50, 100, 50 };
@@ -83,4 +84,10 @@ void Timer::Render(SDL_Renderer* renderer) {
 		SDL_Rect numberRect = { 1100 + (20 * i), 50, 20, 50 };
 		SDL_RenderCopyEx(renderer, numberTextures[digit], NULL, &numberRect, 0, NULL, SDL_FLIP_NONE);
 	}
+
+	if (digits[0] == 0) {
+		return true;
+	}
+
+	return false;
 }

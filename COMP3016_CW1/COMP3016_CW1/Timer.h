@@ -9,7 +9,7 @@ class Timer
 public:
 	Timer(SDL_Renderer* renderer);
 	~Timer();
-	void Render(SDL_Renderer* renderer);
+	bool Render(SDL_Renderer* renderer);
 	std::vector<int> CheckTime();
 	void AddTime();
 private:

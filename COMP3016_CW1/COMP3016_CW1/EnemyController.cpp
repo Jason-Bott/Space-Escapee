@@ -7,10 +7,29 @@ EnemyController::EnemyController(SDL_Renderer* renderer, int level) {
 	int randomX = 0;
 	int randomY = 0;
 
-	for (int i = 0; i < level; i++) {
+	int spinners = (level / 5) + 2;
+	if (level == 1) {
+		spinners = 1;
+	}
+
+	for (int i = 0; i < spinners; i++) {
 		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
 		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
 		enemies.push_back(new Spinner(randomX, randomY, renderer));
+	}
+
+	int patrollers = (level / 3);
+	for (int i = 0; i < patrollers; i++) {
+		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		enemies.push_back(new Patroller(randomX, randomY, renderer));
+	}
+
+	int roamers = (level / 4);
+	for (int i = 0; i < roamers; i++) {
+		randomX = MAZE_OFFSET + ((rand() % MAZE_WIDTH) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		randomY = MAZE_OFFSET + ((rand() % MAZE_HEIGHT) * WALL_LENGTH) + ((WALL_LENGTH - ENEMY_SIZE) / 2);
+		enemies.push_back(new Roamer(randomX, randomY, renderer));
 	}
 }
 

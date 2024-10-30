@@ -12,17 +12,17 @@ const int WALL_LENGTH = 100;
 const int PORTAL_WIDTH = 60;
 const int PORTAL_HEIGHT = 80;
 
-const int PLAYER_SPEED = 1;
+const int PLAYER_SPEED = 2;
 const int PLAYER_SIZE = 50;
 const int PLAYER_SHOTS = 3;
 const int SHOT_COOLDOWN = 500;
 
 const int LASER_LENGTH = 10;
 const int LASER_WIDTH = 5;
-const int LASER_SPEED = 2;
+const int LASER_SPEED = 3;
 
-const int START_TIME = 30;
-const int TIME_INCREASE = 15;
+const int START_TIME = 20;
+const int TIME_INCREASE = 10;
 
 const int LEVEL_COMPLETE_SCORE = 10;
 const int ENEMY_DEFEAT_SCORE = 5;

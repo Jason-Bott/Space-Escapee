@@ -3,6 +3,8 @@
 #include "Maze.h"
 #include "Enemy.h"
 #include "Spinner.h"
+#include "Roamer.h"
+#include "Patroller.h"
 
 class EnemyController
 {

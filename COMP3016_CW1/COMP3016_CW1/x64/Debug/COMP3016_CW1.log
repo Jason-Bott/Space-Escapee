@@ -1,2 +1,8 @@
-﻿  Player.cpp
+﻿  COMP3016_CW1.cpp
+  EnemyController.cpp
+  Game.cpp
+  Laser.cpp
+  Patroller.cpp
+  Roamer.cpp
+  Generating Code...
   COMP3016_CW1.vcxproj -> C:\Users\jason\University\Space-Escapee\COMP3016_CW1\x64\Debug\COMP3016_CW1.exe

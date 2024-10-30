@@ -37,5 +37,7 @@ private:
 	Level* level;
 	EnemyController* enemyController;
 	SDL_Texture* gameOverText;
+	SDL_Texture* pressToText;
 	Mix_Music* music;
+	Mix_Chunk* gameOverSFX;
 };

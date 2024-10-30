@@ -11,7 +11,7 @@ Game::Game() : isRunning(true) {
         exit(1);
     }
 
-	player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     playerTexture = IMG_LoadTexture(renderer, "player_sprite.png");
     if (!playerTexture) {
         exit(1);
@@ -27,11 +27,21 @@ Game::Game() : isRunning(true) {
         exit(1);
     }
 
+    pressToText = IMG_LoadTexture(renderer, "pressToText.png");
+    if (!pressToText) {
+        exit(1);
+    }
+
     Mix_Init(MIX_INIT_MP3);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
 
     music = Mix_LoadMUS("music.mp3");
     if (!music) {
+        exit(1);
+    }
+
+    gameOverSFX = Mix_LoadWAV("gameOverSFX.mp3");
+    if (!gameOverSFX) {
         exit(1);
     }
 
@@ -121,7 +131,11 @@ void Game::Render() {
 
     maze->Render(renderer);
     portal->Render(renderer);
-    timer->Render(renderer);
+    bool outOfTime = timer->Render(renderer);
+    if (outOfTime) {
+        isRunning = false;
+    }
+
     score->Render(renderer);
     level->Render(renderer);
     enemyController->UpdateEnemies(maze, renderer, enemyController, score, player->getX(), player->getY(), isRunning);
@@ -136,19 +150,17 @@ void Game::Render() {
 }
 
 void Game::LevelComplete() {
-    isRunning = false;
-    return;
-
     delete maze;
     delete portal;
     delete enemyController;
-    maze = new Maze(renderer);
-    portal = new Portal(renderer);
-    enemyController = new EnemyController(renderer, level->getLevel());
 
     timer->AddTime();
     score->AddScore(LEVEL_COMPLETE_SCORE);
     level->NextLevel();
+
+    maze = new Maze(renderer);
+    portal = new Portal(renderer);
+    enemyController = new EnemyController(renderer, level->getLevel());
 }
 
 void Game::GameOver() {
@@ -156,7 +168,14 @@ void Game::GameOver() {
     SDL_RenderCopyEx(renderer, gameOverText, NULL, &gameOverRect, 0, NULL, SDL_FLIP_NONE);
     SDL_RenderPresent(renderer);
 
+    Mix_HaltMusic();
+    Mix_PlayChannel(-1, gameOverSFX, 0);
+
     std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    SDL_Rect pressToRect = { (WINDOW_WIDTH / 2) - 500, (WINDOW_HEIGHT / 2) + 100, 1000, 400 };
+    SDL_RenderCopyEx(renderer, pressToText, NULL, &pressToRect, 0, NULL, SDL_FLIP_NONE);
+    SDL_RenderPresent(renderer);
 
     bool waitingForInput = true;
     while (waitingForInput) {
@@ -173,13 +192,9 @@ void Game::GameOver() {
         if (state[SDL_SCANCODE_ESCAPE]) {
             waitingForInput = false;
         }
-
-        for (int key = 0; key < 512; key++) {
-            if (state[key] && key != SDL_SCANCODE_ESCAPE) {
-                Restart();
-                waitingForInput = false;
-                break;
-            }
+        else if (state[SDL_SCANCODE_SPACE]) {
+            Restart();
+            waitingForInput = false;
         }
     }
 }
@@ -187,6 +202,7 @@ void Game::GameOver() {
 void Game::Restart() {
     isRunning = true;
 
+    delete player;
     delete maze;
     delete portal;
     delete timer;
@@ -194,6 +210,7 @@ void Game::Restart() {
     delete level;
     delete enemyController;
 
+    player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     maze = new Maze(renderer);
     portal = new Portal(renderer);
     timer = new Timer(renderer);
@@ -201,5 +218,6 @@ void Game::Restart() {
     level = new Level(renderer);
     enemyController = new EnemyController(renderer, level->getLevel());
 
+    Mix_PlayMusic(music, -1);
     Run();
 }

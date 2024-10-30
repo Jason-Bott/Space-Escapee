@@ -137,8 +137,10 @@
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Patroller.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Roamer.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Spinner.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -151,8 +153,10 @@
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Patroller.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="Roamer.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Spinner.h" />
     <ClInclude Include="Timer.h" />
