@@ -38,10 +38,10 @@ Link Here
 
 - Used for managing dynamic arrays, random number generation and debugging with console outputs.
 - Modules Used:
-	- <vector>
-	- <cstdlib>
-	- <ctime>
-	- <iostream>
+	- vector
+	- cstdlib
+	- ctime
+	- iostream
 
 ## Game Programming Patterns
 
