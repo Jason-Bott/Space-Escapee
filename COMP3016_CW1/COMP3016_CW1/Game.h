@@ -17,6 +17,7 @@ public:
 	Game();
 	~Game();
 	void Run();
+	void OnStart();
 private:
 	void Input();
 	void CheckExit();
@@ -27,6 +28,7 @@ private:
 	bool isRunning;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+	SDL_Texture* menu;
 	SDL_Texture* title;
 	Player* player;
 	SDL_Texture* playerTexture;

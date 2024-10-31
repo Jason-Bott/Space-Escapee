@@ -22,6 +22,11 @@ Game::Game() : isRunning(true) {
         exit(1);
     }
 
+    menu = IMG_LoadTexture(renderer, "menu.png");
+    if (!menu) {
+        exit(1);
+    }
+
     gameOverText = IMG_LoadTexture(renderer, "game_over.png");
     if (!gameOverText) {
         exit(1);
@@ -232,4 +237,31 @@ void Game::Restart() {
 
     Mix_PlayMusic(music, -1);
     Run();
+}
+
+void Game::OnStart() {
+    SDL_Rect menuRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+    SDL_RenderCopyEx(renderer, menu, NULL, &menuRect, 0, NULL, SDL_FLIP_NONE);
+    SDL_RenderPresent(renderer);
+
+    bool waitingForInput = true;
+    while (waitingForInput) {
+        SDL_Event event;
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                SDL_Quit();
+                exit(0);
+            }
+        }
+
+        if (state[SDL_SCANCODE_ESCAPE]) {
+            waitingForInput = false;
+        }
+        else if (state[SDL_SCANCODE_SPACE]) {
+            Run();
+            waitingForInput = false;
+        }
+    }
 }
