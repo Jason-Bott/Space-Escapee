@@ -22,7 +22,7 @@ All assets and dependencies needed should be in the folder and the game should r
 
 ## Video Link
 
-Link Here
+https://youtu.be/mnfbttdCSdo
 
 ## Dependencies Used
 
@@ -150,3 +150,14 @@ I am pleased with the game as a whole and all the features implemented.
 Although I am very pleased with what I have produced I believe there are improvements that could be made.
 Firstly I believe I could probably use more Game Programming Patterns to improve overall performance and gameplay.
 I also believe that now that I have more knowledge with c++ and SDL I would be able to create 'tidier' code by using classes, functions and inheritance more appropriately.
+
+## Credit
+
+### Sound
+
+Sound Effects by pixabay on pixabay: https://pixabay.com/users/pixabay-1/
+Music by moodmode on pixabay: https://pixabay.com/users/moodmode-33139253/
+
+### Sprites
+
+Sprite and Images by Jason Bott using Microsoft Paint
