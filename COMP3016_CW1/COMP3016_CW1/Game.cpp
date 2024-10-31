@@ -121,11 +121,6 @@ void Game::Input() {
     if (state[SDL_SCANCODE_LSHIFT]) {
         player->Blink();
     }
-
-    if (state[SDL_SCANCODE_X]) {
-        SDL_Quit();
-        exit(0);
-    }
 }
 
 void Game::CheckExit() {
