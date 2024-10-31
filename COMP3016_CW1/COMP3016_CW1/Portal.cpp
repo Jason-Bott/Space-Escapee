@@ -3,6 +3,7 @@
 #include "SDL_image.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 Portal::Portal(SDL_Renderer* renderer, int playerX, int playerY) {
 	srand(static_cast<unsigned>(time(0)));
@@ -23,8 +24,8 @@ Portal::Portal(SDL_Renderer* renderer, int playerX, int playerY) {
 	yPosition = ((y * WALL_LENGTH) + MAZE_OFFSET) + ((((WALL_LENGTH - WALL_WIDTH) - PORTAL_HEIGHT) / 2) + WALL_WIDTH);
 
 	portalTexture = IMG_LoadTexture(renderer, "portal_sprite.png");
-
 	if (!portalTexture) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 }

@@ -5,6 +5,7 @@ Level::Level(SDL_Renderer* renderer) : level(1) {
 	levelText = IMG_LoadTexture(renderer, "level_text.png");
 
 	if (!levelText) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -17,6 +18,7 @@ Level::Level(SDL_Renderer* renderer) : level(1) {
 		numberTextures[i] = IMG_LoadTexture(renderer, filenames[i]);
 
 		if (!numberTextures[i]) {
+			std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 			exit(1);
 		}
 	}

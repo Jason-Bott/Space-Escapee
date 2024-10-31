@@ -3,8 +3,8 @@
 
 Enemy::Enemy(int x, int y, int fireRate, const char* spriteFile, SDL_Renderer* renderer) : x(x), y(y), angle(0), fireRate(fireRate), lastShotTime(0), lasers() {
 	enemyTexture = IMG_LoadTexture(renderer, spriteFile);
-
 	if (!enemyTexture) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 

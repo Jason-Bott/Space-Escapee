@@ -5,6 +5,7 @@ Timer::Timer(SDL_Renderer* renderer) : time(START_TIME), lastSecond(0) {
 	timeText = IMG_LoadTexture(renderer, "time_text.png");
 
 	if (!timeText) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -17,6 +18,7 @@ Timer::Timer(SDL_Renderer* renderer) : time(START_TIME), lastSecond(0) {
 		numberTextures[i] = IMG_LoadTexture(renderer, filenames[i]);
 		
 		if (!numberTextures[i]) {
+			std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 			exit(1);
 		}
 	}

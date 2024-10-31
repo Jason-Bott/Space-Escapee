@@ -5,6 +5,7 @@ Score::Score(SDL_Renderer* renderer) : score(0) {
 	scoreText = IMG_LoadTexture(renderer, "score_text.png");
 
 	if (!scoreText) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -17,6 +18,7 @@ Score::Score(SDL_Renderer* renderer) : score(0) {
 		numberTextures[i] = IMG_LoadTexture(renderer, filenames[i]);
 
 		if (!numberTextures[i]) {
+			std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 			exit(1);
 		}
 	}

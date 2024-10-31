@@ -14,26 +14,31 @@ Game::Game() : isRunning(true) {
     player = new Player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, renderer);
     playerTexture = IMG_LoadTexture(renderer, "player_sprite.png");
     if (!playerTexture) {
+        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
         exit(1);
     }
 
     title = IMG_LoadTexture(renderer, "title.png");
     if (!title) {
+        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
         exit(1);
     }
 
     menu = IMG_LoadTexture(renderer, "menu.png");
     if (!menu) {
+        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
         exit(1);
     }
 
     gameOverText = IMG_LoadTexture(renderer, "game_over.png");
     if (!gameOverText) {
+        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
         exit(1);
     }
 
     pressToText = IMG_LoadTexture(renderer, "pressToText.png");
     if (!pressToText) {
+        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
         exit(1);
     }
 
@@ -42,16 +47,19 @@ Game::Game() : isRunning(true) {
 
     music = Mix_LoadMUS("music.mp3");
     if (!music) {
+        std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
         exit(1);
     }
 
     gameOverSFX = Mix_LoadWAV("gameOverSFX.mp3");
     if (!gameOverSFX) {
+        std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
         exit(1);
     }
 
     portalSFX = Mix_LoadWAV("portalSFX.mp3");
     if (!portalSFX) {
+        std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
         exit(1);
     }
 

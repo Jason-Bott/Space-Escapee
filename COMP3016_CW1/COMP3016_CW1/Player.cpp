@@ -15,17 +15,20 @@ Player::Player(int x, int y, SDL_Renderer* renderer) : x(x), y(y), angle(0), las
 		numberTextures[i] = IMG_LoadTexture(renderer, filenames[i]);
 
 		if (!numberTextures[i]) {
+			std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 			exit(1);
 		}
 	}
 
 	blinkText = IMG_LoadTexture(renderer, "blink_text.png");
 	if (!blinkText) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
 	readyText = IMG_LoadTexture(renderer, "ready_text.png");
 	if (!readyText) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
@@ -33,11 +36,13 @@ Player::Player(int x, int y, SDL_Renderer* renderer) : x(x), y(y), angle(0), las
 
 	laserSFX = Mix_LoadWAV("laser.mp3");
 	if (!laserSFX) {
+		std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
 		exit(1);
 	}
 
 	blinkSFX = Mix_LoadWAV("blinkSFX.mp3");
 	if (!blinkSFX) {
+		std::cout << "Failed to load sound: " << Mix_GetError() << std::endl;
 		exit(1);
 	}
 };

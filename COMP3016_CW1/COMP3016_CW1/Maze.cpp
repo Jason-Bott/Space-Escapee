@@ -2,12 +2,13 @@
 #include "SDL_image.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 Maze::Maze(SDL_Renderer* renderer) {
 	srand(static_cast<unsigned>(time(0)));
 	wallTexture = IMG_LoadTexture(renderer, "wall_sprite.png");
-
 	if (!wallTexture) {
+		std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
 		exit(1);
 	}
 
